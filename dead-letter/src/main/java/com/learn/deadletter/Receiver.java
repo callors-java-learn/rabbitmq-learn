@@ -9,20 +9,23 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-@RabbitListener(queues = RabbitMQConfig.ROUTING_KEY)
+@RabbitListener(queues = RabbitMQConfig.MY_QUEUE_NAME)
 public class Receiver {
 
     @RabbitHandler
     public void process(Object message) {
         try {
-            System.out.println(new Date()+"------------接收到消息:"+message);
-            String s = new String(((Message) message).getBody());
-            System.out.println("接收到消息:"+s);
-            int a=0;
-            int b=1/a;
-            System.out.println("消息已处理");
+            System.out.println("---------"+new Date()+"-----queue:"+RabbitMQConfig.MY_QUEUE_NAME+"-------接收到消息:"+message);
+            String s = new String(((Message) message).getBody())+"";
+            System.out.println("---------"+new Date()+"-----queue:"+RabbitMQConfig.MY_QUEUE_NAME+"-------接收到消息:"+s);
+            // 字符中出现error 表示消费消息失败
+            if (s.indexOf("error1")>=0) {
+                int a = 0;
+                int b = 1 / a;
+            }
+            System.out.println("---------"+new Date()+"-----queue:"+RabbitMQConfig.MY_QUEUE_NAME+"-------消息已处理");
         }catch (Exception e){
-            System.out.println("处理失败");
+            System.out.println("---------"+new Date()+"-----queue:"+RabbitMQConfig.MY_QUEUE_NAME+"-------处理失败");
             throw new RuntimeException("处理失败");
         }
     }
