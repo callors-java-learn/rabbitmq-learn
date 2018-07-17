@@ -26,6 +26,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue myQueue2() {
+
         Map<String,Object> args=new HashMap<>();
         args.put("x-dead-letter-exchange", DEAD_LETTER_EXCHANGE);
         args.put("x-dead-letter-routing-key", MY_QUEUE2_NAME);
